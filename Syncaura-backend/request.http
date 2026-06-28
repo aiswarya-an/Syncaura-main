@@ -23,3 +23,6 @@ Content-Type: application/json
 
 ### Get All Tasks
 GET http://localhost:5000/api/tasks
+
+### Health Check
+GET http://localhost:5000/health
