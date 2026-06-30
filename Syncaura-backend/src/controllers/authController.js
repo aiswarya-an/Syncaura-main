@@ -56,7 +56,7 @@ export const register = async (req, res, next) => {
         `<h2>Welcome ${name}</h2>`
       );
     } catch (err) {
-      next(err);
+      console.error("Welcome email failed:", err);
     }
 
     res.status(201).json({
