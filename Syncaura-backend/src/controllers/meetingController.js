@@ -121,6 +121,19 @@ export const updateMeeting = async (req, res) => {
     const { id } = req.params;
     const { title, description, startTime, endTime } = req.body;
 
+    if (startTime !== undefined || endTime !== undefined) {
+      const start = startTime !== undefined ? new Date(startTime) : null;
+      const end = endTime !== undefined ? new Date(endTime) : null;
+
+      if ((start && isNaN(start.getTime())) || (end && isNaN(end.getTime()))) {
+        return res.status(400).json({ message: "Invalid date format for startTime or endTime" });
+      }
+
+      if (start && end && end <= start) {
+        return res.status(400).json({ message: "endTime must be after startTime" });
+      }
+    }
+
     const result = await pool.query(
       `UPDATE meetings SET 
         title = COALESCE($1, title),
