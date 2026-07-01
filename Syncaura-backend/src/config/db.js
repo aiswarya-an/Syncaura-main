@@ -35,4 +35,14 @@ export const initDB = async () => {
   }
 };
 
+// testing the db is connected or not
+// pool.query("SELECT NOW()", (err, res) => {
+//   if (err) {
+//     console.error("DB Test Failed ❌", err);
+//   } else {
+//     console.log("DB Test Success ✅", res.rows);
+//   }
+// });
+
 export default pool;
+
