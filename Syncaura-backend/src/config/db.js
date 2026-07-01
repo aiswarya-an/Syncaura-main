@@ -9,19 +9,18 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
+console.log("DATABASE_URL =", process.env.DATABASE_URL);
+
 const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-
   ssl: false,
-
-  // 🔥 IMPORTANT: force string safety
-  password: String(process.env.DB_PASSWORD),
 });
+
 pool.connect()
-  .then(() => console.log("PostgreSQL Connected"))
-  .catch((err) => console.error("PostgreSQL Connection Error:", err));
+  .then(() => console.log("✅ PostgreSQL Connected"))
+  .catch((err) => console.error("❌ PostgreSQL Connection Error:", err));
 
 export const initDB = async () => {
   try {
@@ -35,15 +34,5 @@ export const initDB = async () => {
     console.error("Error initializing database:", err);
   }
 };
-
-// testing the db is connected or not
-// pool.query("SELECT NOW()", (err, res) => {
-//   if (err) {
-//     console.error("DB Test Failed ❌", err);
-//   } else {
-//     console.log("DB Test Success ✅", res.rows);
-//   }
-// });
-
 
 export default pool;
